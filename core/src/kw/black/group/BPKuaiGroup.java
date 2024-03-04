@@ -10,12 +10,12 @@ import com.badlogic.gdx.utils.Array;
 import com.kw.gdx.asset.Asset;
 import com.kw.gdx.listener.OrdinaryButtonListener;
 
-public class KuaiGroup extends Group {
+public class BPKuaiGroup extends Group {
     private Array<Image> images;
     private int [][] data;
     private Group blackGroup;
 
-    public KuaiGroup(int[][] floats1){
+    public BPKuaiGroup(int[][] floats1){
         setSize(70*5,70*5);
         this.images = new Array<>();
         this.blackGroup = new Group();
@@ -44,10 +44,6 @@ public class KuaiGroup extends Group {
         blackGroup.setPosition(getWidth()/2.0f,getHeight()/2.0f,Align.center);
     }
 
-    public int[][] getData() {
-        return data;
-    }
-
     public Group getBlackGroup() {
         return blackGroup;
     }
@@ -58,5 +54,21 @@ public class KuaiGroup extends Group {
 
     public void resetPosition() {
         blackGroup.setPosition(getWidth()/2.0f,getHeight()/2.0f,Align.center);
+    }
+
+    public int[][] getData() {
+        return data;
+    }
+
+    public void noValue() {
+        for (Image image : images) {
+            image.setColor(Color.BLUE);
+        }
+    }
+
+    public void value() {
+        for (Image image : images) {
+            image.setColor(Color.RED);
+        }
     }
 }

@@ -3,7 +3,7 @@ package kw.black.data;
 
 import com.badlogic.gdx.utils.Array;
 
-public class LevelData {
+public class PzLevelData {
         private final int[][] data1 = {
                 {1,1,1},
                 {0,0,1},
@@ -57,7 +57,7 @@ public class LevelData {
         };
 
         private Array<int[][]> shapeData ;
-        public LevelData(){
+        public PzLevelData(){
                 shapeData = new Array<>();
                 shapeData.add(data1);
                 shapeData.add(data2);

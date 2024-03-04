@@ -8,12 +8,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Align;
 import com.kw.gdx.asset.Asset;
 
-public class BroadItempGroup extends Group {
+public class BPBroadItempGroup extends Group {
     public Image blackBg;
     public Image blackImg;
     private float cellWidth;
     private boolean busy;
-    public BroadItempGroup(int x,int y){
+    public BPBroadItempGroup(int x, int y){
         cellWidth = 700.0f / 10;
         blackBg = new Image(
                 new NinePatch(Asset.getAsset().getTexture("white.png"),
@@ -22,15 +22,17 @@ public class BroadItempGroup extends Group {
         addActor(blackBg);
         setPosition( x*cellWidth,y*cellWidth, Align.center);
         setSize(blackBg.getWidth(), blackBg.getHeight());
-        blackImg = new Image(Asset.getAsset().getTexture("white.png"));
-        blackImg.setColor(Color.BLACK);
+        blackImg = new Image(new NinePatch(
+                Asset.getAsset().getTexture("white.png"),3,3,3,3));
+        blackImg.setColor(Color.WHITE);
         addActor(blackImg);
+        blackImg.setSize(cellWidth-2,cellWidth-2);
         blackImg.setPosition(getWidth()/2.f,getHeight()/2.0f,Align.center);
     }
 
     public void light() {
         if (busy)return;
-        blackImg.setColor(Color.BLACK);
+        blackImg.setColor(Color.valueOf("#999999"));
     }
 
     public void reset(){

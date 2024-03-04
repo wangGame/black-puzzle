@@ -9,15 +9,17 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 
 import kw.black.MyClickListener;
-import kw.black.data.LevelData;
+import kw.black.data.PzLevelData;
 
-public class BottomGroup extends Group {
-    private GameBoradGroup gameBoradGroup;
-    private LevelData data;
-    public BottomGroup(GameBoradGroup gameBoradGroup){
+public class BPBottomGroup extends Group {
+    private BPGameBoradGroup bPGameBoradGroup;
+    private PzLevelData data;
+    private Array<BPKuaiGroup> kuaiGroupArray = new Array<>();
+
+    public BPBottomGroup(BPGameBoradGroup bPGameBoradGroup){
         setSize(700,150);
-        this.gameBoradGroup = gameBoradGroup;
-        this.data = new LevelData();
+        this.bPGameBoradGroup = bPGameBoradGroup;
+        this.data = new PzLevelData();
         Table table = new Table();
         setBottomItem(table);
         addActor(table);
@@ -25,7 +27,6 @@ public class BottomGroup extends Group {
     }
 
 
-    private Array<KuaiGroup> kuaiGroupArray = new Array<>();
     private void setBottomItem(Table table){
         table.clear();
         kuaiGroupArray.clear();
@@ -36,7 +37,7 @@ public class BottomGroup extends Group {
             table.add(group).padLeft(50).padRight(50);
             Array<int[][]> temps = new Array(floats);
             int[][] floats1 = temps.removeIndex((int) (Math.random() * temps.size));
-            KuaiGroup kuaiGroup = new KuaiGroup(floats1);
+            BPKuaiGroup kuaiGroup = new BPKuaiGroup(floats1);
             group.addActor(kuaiGroup);
             kuaiGroupArray.add(kuaiGroup);
             kuaiGroup.setPosition(75,75, Align.center);
@@ -44,7 +45,7 @@ public class BottomGroup extends Group {
             kuaiGroup.setOrigin(Align.center);
             kuaiGroup.setScale(i1);
             new MyClickListener(kuaiGroup){
-                private Array<BroadItempGroup> tempArrays = new Array<>();
+                private Array<BPBroadItempGroup> tempArrays = new Array<>();
                 @Override
                 public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                     getKuaiGroup().setScale(1.0f);
@@ -54,19 +55,19 @@ public class BottomGroup extends Group {
                 @Override
                 public void touchDragged(InputEvent event, float x, float y, int pointer) {
                     super.touchDragged(event, x, y, pointer);
-                    KuaiGroup kuaiGroup1 = getKuaiGroup();
+                    BPKuaiGroup kuaiGroup1 = getKuaiGroup();
                     Group blackGroup = kuaiGroup1.getBlackGroup();
                     blackGroup.setPosition(x,y);
                     Array<Image> images = kuaiGroup1.getImages();
-                    gameBoradGroup.reset();
+                    bPGameBoradGroup.reset();
                     tempArrays.clear();
                     for (Image image : images) {
                         float x1 = image.getX()+10;
                         float y1 = image.getY();
                         Vector2 vector2 = new Vector2(x1,y1);
                         image.getParent().localToStageCoordinates(vector2);
-                        gameBoradGroup.stageToLocalCoordinates(vector2);
-                        BroadItempGroup check = gameBoradGroup.check(vector2);
+                        bPGameBoradGroup.stageToLocalCoordinates(vector2);
+                        BPBroadItempGroup check = bPGameBoradGroup.check(vector2);
                         if (check==null){
                             tempArrays.clear();
                             break;
@@ -75,7 +76,7 @@ public class BottomGroup extends Group {
                         }
                     }
                     if (tempArrays.size>0){
-                        for (BroadItempGroup tempArray : tempArrays) {
+                        for (BPBroadItempGroup tempArray : tempArrays) {
                             tempArray.light();
                         }
                     }
@@ -85,7 +86,7 @@ public class BottomGroup extends Group {
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                     super.touchUp(event, x, y, pointer, button);
                     if (tempArrays.size>0) {
-                        for (BroadItempGroup tempArray : tempArrays) {
+                        for (BPBroadItempGroup tempArray : tempArrays) {
                             tempArray.setFill();
                         }
                         kuaiGroupArray.removeValue(getKuaiGroup(),false);
@@ -98,11 +99,19 @@ public class BottomGroup extends Group {
                         getKuaiGroup().resetPosition();
                     }
                     //检测
-                    gameBoradGroup.success();
+                    bPGameBoradGroup.success();
+                    //那些是放不了的
+                    canDown();
                 }
             };
         }
         table.pack();
         setX(350,Align.center);
+    }
+
+    public void canDown(){
+        for (BPKuaiGroup bpKuaiGroup : kuaiGroupArray) {
+            bPGameBoradGroup.check(bpKuaiGroup);
+        }
     }
 }

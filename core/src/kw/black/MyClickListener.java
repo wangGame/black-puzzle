@@ -2,16 +2,16 @@ package kw.black;
 
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
-import kw.black.group.KuaiGroup;
+import kw.black.group.BPKuaiGroup;
 
 public class MyClickListener extends ClickListener {
-    private KuaiGroup kuaiGroup;
-    public MyClickListener(KuaiGroup kuaiGroup){
+    private BPKuaiGroup kuaiGroup;
+    public MyClickListener(BPKuaiGroup kuaiGroup){
         this.kuaiGroup = kuaiGroup;
         kuaiGroup.addListener(this);
     }
 
-    public KuaiGroup getKuaiGroup() {
+    public BPKuaiGroup getKuaiGroup() {
         return kuaiGroup;
     }
 }
