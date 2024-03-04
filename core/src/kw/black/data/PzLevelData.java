@@ -49,11 +49,9 @@ public class PzLevelData {
                 {1,1}
         };
         private final int[][] data11 = {
-                {0,0,0},
                 {1,1,1},
                 {1,1,1},
                 {1,1,1},
-                {0,0,0}
         };
 
         private Array<int[][]> shapeData ;

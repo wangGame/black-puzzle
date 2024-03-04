@@ -57,7 +57,8 @@ public class BPBottomGroup extends Group {
                     super.touchDragged(event, x, y, pointer);
                     BPKuaiGroup kuaiGroup1 = getKuaiGroup();
                     Group blackGroup = kuaiGroup1.getBlackGroup();
-                    blackGroup.setPosition(x,y);
+                    blackGroup.setDebug(true);
+                    blackGroup.setPosition(x,y + 30,Align.bottom);
                     Array<Image> images = kuaiGroup1.getImages();
                     bPGameBoradGroup.reset();
                     tempArrays.clear();
@@ -102,11 +103,23 @@ public class BPBottomGroup extends Group {
                     bPGameBoradGroup.success();
                     //那些是放不了的
                     canDown();
+                    //失败
+                    fail();
                 }
             };
         }
         table.pack();
         setX(350,Align.center);
+    }
+
+    private boolean fail() {
+        for (BPKuaiGroup bpKuaiGroup : kuaiGroupArray) {
+            if (bpKuaiGroup.isValue()) {
+                return false;
+            }
+        }
+        System.out.println("失败");
+        return true;
     }
 
     public void canDown(){

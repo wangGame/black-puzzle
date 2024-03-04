@@ -14,9 +14,11 @@ public class BPKuaiGroup extends Group {
     private Array<Image> images;
     private int [][] data;
     private Group blackGroup;
+    private boolean value;
 
     public BPKuaiGroup(int[][] floats1){
         setSize(70*5,70*5);
+        value = true;
         this.images = new Array<>();
         this.blackGroup = new Group();
         blackGroup.setSize(getWidth(),getHeight());
@@ -25,9 +27,12 @@ public class BPKuaiGroup extends Group {
 
         Vector2 startV2 = new Vector2();
         Vector2 endV2 = new Vector2();
+        startV2.set(Integer.MAX_VALUE,Integer.MAX_VALUE);
+        endV2.set(Integer.MIN_VALUE,Integer.MIN_VALUE);
         for (int i = 0; i < data.length; i++) {
             for (int i1 = 0; i1 < data[i].length; i1++) {
                 if (data[i][i1] != 0) {
+
                     Image image = new Image(Asset.getAsset().getTexture("ui/x0.75/back.png"));
                     image.setPosition(i * 70.0f, i1 * 70);
                     blackGroup.addActor(image);
@@ -61,14 +66,20 @@ public class BPKuaiGroup extends Group {
     }
 
     public void noValue() {
+        this.value = false;
         for (Image image : images) {
             image.setColor(Color.BLUE);
         }
     }
 
     public void value() {
+        this.value = true;
         for (Image image : images) {
             image.setColor(Color.RED);
         }
+    }
+
+    public boolean isValue() {
+        return value;
     }
 }
