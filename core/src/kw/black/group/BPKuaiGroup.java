@@ -32,8 +32,8 @@ public class BPKuaiGroup extends Group {
         for (int i = 0; i < data.length; i++) {
             for (int i1 = 0; i1 < data[i].length; i1++) {
                 if (data[i][i1] != 0) {
+                    Image image = new Image(Asset.getAsset().getTexture("white.png"));
 
-                    Image image = new Image(Asset.getAsset().getTexture("ui/x0.75/back.png"));
                     image.setPosition(i * 70.0f, i1 * 70);
                     blackGroup.addActor(image);
                     image.setColor(Color.RED);
