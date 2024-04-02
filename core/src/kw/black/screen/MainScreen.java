@@ -25,7 +25,6 @@ public class MainScreen extends BaseScreen {
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 setScreen(new BlackPuzzleScreen(game));
-//                setScreen(new TerisScreen(game));
             }
         });
     }

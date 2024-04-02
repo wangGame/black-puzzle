@@ -8,9 +8,12 @@ import com.badlogic.gdx.utils.Array;
 
 public class BPGameBoradGroup extends Group {
     private Array<BPBroadItempGroup> broadItempGroups;
+    private Vector2 tempV2;
+
     public BPGameBoradGroup(){
         setSize(700,700);
         broadItempGroups = new Array<>();
+        this.tempV2 = new Vector2();
     }
 
     public void init(){
@@ -92,11 +95,6 @@ public class BPGameBoradGroup extends Group {
         }
     }
 
-    public void checkCanDown(){
-
-    }
-
-    private Vector2 tempV2 = Vector2.Zero;
     public void check(BPKuaiGroup bpKuaiGroup) {
         Array<Image> images = bpKuaiGroup.getImages();
         for (int i = 0; i < 10; i++) {

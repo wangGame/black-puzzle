@@ -1,4 +1,4 @@
-package kw.black;
+package kw.black.listener;
 
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 

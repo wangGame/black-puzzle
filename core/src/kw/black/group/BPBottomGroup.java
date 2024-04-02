@@ -1,29 +1,31 @@
 package kw.black.group;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 
-import kw.black.MyClickListener;
+import kw.black.listener.MyClickListener;
 import kw.black.data.PzLevelData;
 
 public class BPBottomGroup extends Group {
     private BPGameBoradGroup bPGameBoradGroup;
+    private Array<BPKuaiGroup> kuaiGroupArray;
     private PzLevelData data;
-    private Array<BPKuaiGroup> kuaiGroupArray = new Array<>();
 
     public BPBottomGroup(BPGameBoradGroup bPGameBoradGroup){
         setSize(700,150);
         this.bPGameBoradGroup = bPGameBoradGroup;
         this.data = new PzLevelData();
+        this.kuaiGroupArray = new Array<>();
         Table table = new Table();
         setBottomItem(table);
         addActor(table);
-
     }
 
 
@@ -46,6 +48,9 @@ public class BPBottomGroup extends Group {
             kuaiGroup.setScale(i1);
             new MyClickListener(kuaiGroup){
                 private Array<BPBroadItempGroup> tempArrays = new Array<>();
+                private BPBroadItempGroup itempGroup;
+                private boolean updateV2;
+                private Vector2 itemV2 = new Vector2();
                 @Override
                 public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                     getKuaiGroup().setScale(1.0f);
@@ -62,6 +67,7 @@ public class BPBottomGroup extends Group {
                     Array<Image> images = kuaiGroup1.getImages();
                     bPGameBoradGroup.reset();
                     tempArrays.clear();
+                    updateV2 = true;
                     for (Image image : images) {
                         float x1 = image.getX()+10;
                         float y1 = image.getY();
@@ -73,6 +79,10 @@ public class BPBottomGroup extends Group {
                             tempArrays.clear();
                             break;
                         }else {
+                            if (updateV2){
+                                itempGroup = check;
+                                updateV2 = false;
+                            }
                             tempArrays.add(check);
                         }
                     }
@@ -91,7 +101,17 @@ public class BPBottomGroup extends Group {
                             tempArray.setFill();
                         }
                         kuaiGroupArray.removeValue(getKuaiGroup(),false);
-                        getKuaiGroup().remove();
+
+
+                        float x1 = itempGroup.getX();
+                        float y1 = itempGroup.getY();
+                        itemV2.set(x1,y1);
+
+                        BPKuaiGroup kuaiGroup1 = getKuaiGroup();
+
+                        kuaiGroup1.remove();
+
+
                         if (kuaiGroupArray.size<=0) {
                             setBottomItem(table);
                         }
@@ -99,12 +119,11 @@ public class BPBottomGroup extends Group {
                         getKuaiGroup().setScale(150.0f / (70.0f * 5));
                         getKuaiGroup().resetPosition();
                     }
-                    //检测
                     bPGameBoradGroup.success();
-                    //那些是放不了的
                     canDown();
-                    //失败
-                    fail();
+                    if (fail()) {
+                        System.out.println("no fill");
+                    }
                 }
             };
         }
@@ -118,7 +137,6 @@ public class BPBottomGroup extends Group {
                 return false;
             }
         }
-        System.out.println("失败");
         return true;
     }
 

@@ -3,6 +3,7 @@ package kw.black;
 import com.kw.gdx.BaseGame;
 import com.kw.gdx.resource.annotation.GameInfo;
 
+import kw.black.screen.BlackPuzzleScreen;
 import kw.black.screen.MainScreen;
 
 @GameInfo(width = 720,height = 1280)
